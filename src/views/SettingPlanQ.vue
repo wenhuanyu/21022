@@ -52,6 +52,11 @@ export default {
                     value: 'name',
                 },
                 {
+                    name: '类型',
+                    value: 'sta_name',
+                    width: '120px'
+                },
+                {
                     name: '已选内容',
                     value: 'detail',
                     formatter: (row) => {

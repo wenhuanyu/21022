@@ -16,6 +16,12 @@
                     <el-form-item label="方案名称" prop="name">
                         <el-input v-model="form.name" placeholder="请输入方案名称" class="item1" style="width: 498px"></el-input>
                     </el-form-item>
+                    <el-form-item label="性别" prop="sta">
+                        <el-radio-group v-model="form.sta" @change="staChange">
+                            <el-radio :label="0" name="0">单脑</el-radio>
+                            <el-radio :label="1" name="1">双脑</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
                     <!--情绪难易级别-->
 <!--                    <el-form-item label="难易级别" prop="level">-->
 <!--                        <span style="color: #666666 ; margin-right: 5px;">心率</span>-->
@@ -135,6 +141,7 @@ export default {
             head_temp:'',
             attention:'',
             form: {
+                sta:0,
                 name: '',
                 game_info: '',
                 before_music:'',
@@ -147,6 +154,9 @@ export default {
                 name: [
                     {required: true, message: '请填写方案名称', trigger: 'blur'}
                 ],
+                sta:[
+                    {required: true, message: '请选择方案类型', trigger: 'blur'}
+                ]
 
             },
             // difficulty: [],
@@ -261,8 +271,16 @@ export default {
         backPage() {
             this.$router.go(-1);
         },
+        staChange(e) {
+            this.form.sta = e
+            this.onPaper()
+        },
         async onPaper() {
-            await this.$axios.post('api/emotion_policy/game_lst').then(res => {
+            await this.$axios.post('api/emotion_policy/game_lst',this.$qs.stringify(
+                {
+                    sta:this.form.sta
+                }
+            )).then(res => {
                 if (res.data.code === 1) {
                     let list = res.data.data.all
                     const data = [];

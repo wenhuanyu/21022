@@ -36,28 +36,32 @@
                                 <div>
                                     <el-row>
                                         <el-col :span="12">
-                                            <el-select placeholder="请选择患者"
-                                                       v-model="patientListName"
-                                                       @change="onPatientChange($event)"
-                                                       clearable
-                                            >
-                                                <el-option v-for="item in patientList"
-                                                           :key="item.id"
-                                                           :value="item.id"
-                                                           :label="item.name +'  '+ item.age+'岁'"></el-option>
+                                                <el-select placeholder="请选择患者"
+                                                           v-model="patientListName"
+                                                           filterable :filter-method="dataFilter"
+                                                           @visible-change="visibleHideSelectInput"
+                                                           @change="onPatientChange($event)"
+                                                           clearable
+                                                >
+                                                    <el-option v-for="item in deviceIdList"
+                                                               :key="item.id"
+                                                               :value="item.id"
+                                                               :label="item.name +'  '+ item.age+'岁'+'  '+item.medical_num"></el-option>
                                             </el-select>
                                         </el-col>
                                         <el-col :span="12">
-                                            <el-select placeholder="请选择终端"
-                                                       v-model="terminal_nickname"
-                                                       @change="hanldClickTerminal($event)"
-                                                       style="width: 100%;"
-                                                       clearable
-                                            >
-                                                <el-option v-for="item in terminalList"
-                                                           :key="item.id"
-                                                           :value="item.id"
-                                                           :label="item.nickname"></el-option>
+                                                <el-select placeholder="请选择终端"
+                                                           v-model="terminal_nickname"
+                                                           filterable :filter-method="dataFilterTerminal"
+                                                           @visible-change="visibleHideSelectInputTerminal"
+                                                           @change="hanldClickTerminal($event)"
+                                                           style="width: 100%;"
+                                                           clearable
+                                                >
+                                                    <el-option v-for="item in terminalIdList"
+                                                               :key="item.id"
+                                                               :value="item.id"
+                                                               :label="item.nickname"></el-option>
                                             </el-select>
                                         </el-col>
                                     </el-row>
@@ -269,8 +273,10 @@ export default {
                 label: 'name'
             },
             terminalList: [],
+            terminalIdList:[],
             terminal_nickname: '',
             patientList: [],
+            deviceIdList:[],
             patientListName: '',
             add_newList: [],
             patient_id: '',
@@ -306,21 +312,89 @@ export default {
     computed: {},
     watch: {},
     methods: {
+        // 自定义筛选方法
+        dataFilter(val) {
+            if (val) {
+                let filterResult = [];
+                let originalData = JSON.parse(JSON.stringify(this.patientList));
+                originalData.filter((item) => {
+                    if (item.medical_num.includes(val)) {
+                        filterResult.push(item);
+                    }
+                })
+                this.deviceIdList = filterResult
+
+            } else {
+                this.deviceIdList = this.patientList;
+            }
+        },
+        // 当下拉框出现时触发
+        visibleHideSelectInput(val) {
+            if(val) {
+                this.deviceIdList = JSON.parse(JSON.stringify(this.patientList));
+            }
+        },
+        //患者接口
+        async onPatient() {
+            await this.$axios.post('api/patient/index', this.$qs.stringify({
+                type: 1,
+            })).then(res => {
+                if (res.data.code == 1) {
+                    this.patientList = res.data.data
+                }
+            })
+        },
+        // 自定义筛选方法
+        dataFilterTerminal(val) {
+            if (val) {
+                let filterResult = [];
+                let originalData = JSON.parse(JSON.stringify(this.terminalList));
+                originalData.filter((item) => {
+                    if (item.nickname.includes(val)) {
+                        filterResult.push(item);
+                    }
+                })
+                this.terminalIdList = filterResult
+
+            } else {
+                this.terminalIdList = this.terminalList;
+            }
+        },
+        // 当下拉框出现时触发
+        visibleHideSelectInputTerminal(val) {
+            if(val) {
+                this.terminalIdList = JSON.parse(JSON.stringify(this.terminalList));
+            }
+        },
+        //终端接口
+        getTerminal() {
+            this.$axios.post('api/common/termLst').then(res => {
+                if (res.data.code === 1) {
+                    let terminalListId = {};
+                    this.terminalList = res.data.data.map(item => {
+                        terminalListId[item.id] = item;
+                        return item;
+                    })
+                    this.terminalListId = terminalListId
+                }
+            })
+        },
         //静息期
         period(e) {
             this.period_e = e
         },
         //弹框关闭
         onDialogClose() {
-            this.add_newList = [];
-            this.patientListName = '';
-            this.terminal_nickname = '';
-            this.music = '';
-            this.limit_time_radio = '';
-            this.needMusic = false;
-            this.limit_time_input = '';
-            this.limit_time_radio = 0
-            this.periodTime = ''
+            this.qingkong()
+            // this.add_newList = [];
+            // this.patientListName = '';
+            // this.terminal_nickname = '';
+            // this.music = '';
+            // this.limit_time_radio = '';
+            // this.needMusic = false;
+            // this.limit_time_input = '';
+            // this.limit_time_radio = 0
+            // this.periodTime = ''
         },
         //删除选择的患者 终端
         deleteRow(index, rows) {
@@ -366,29 +440,8 @@ export default {
                 })
             }
         },
-        //终端接口
-        getTerminal() {
-            this.$axios.post('api/common/termLst').then(res => {
-                if (res.data.code === 1) {
-                    let terminalListId = {};
-                    this.terminalList = res.data.data.map(item => {
-                        terminalListId[item.id] = item;
-                        return item;
-                    })
-                    this.terminalListId = terminalListId
-                }
-            })
-        },
-        //患者接口
-        async onPatient() {
-            await this.$axios.post('api/patient/index', this.$qs.stringify({
-                type: 1,
-            })).then(res => {
-                if (res.data.code == 1) {
-                    this.patientList = res.data.data
-                }
-            })
-        },
+
+
 
         selectTerminal() {
             if (this.curindex === 0) {
@@ -560,6 +613,7 @@ export default {
         add() {
             this.dialogFormVisible = true
 
+
         },
         //静息期音乐选择
         onMusicChange(e) {
@@ -570,6 +624,32 @@ export default {
         onPeriodTimeChange(e) {
             console.log(e)
             console.log(this.periodTime)
+        },
+        qingkong() {
+            this.add_newList = [];
+            this.patientListName = '';
+            this.terminal_nickname = '';
+            this.music = '';
+            this.limit_time_radio = '';
+            this.needMusic = false;
+            this.limit_time_input = '';
+            this.limit_time_radio = 0
+            this.periodTime = ''
+            this.limit_Time =''
+            this.patient_id = ''
+            this.patient_id_name = ''
+            this.patient_id_num = ''
+            this.form.patient_ids = ''
+            this.form.terminal_ids = ''
+            this.form.test_paper_ids = ''
+            this.form.music_id = ''
+            this.form.music_time = ''
+            this.form.policy_id = ''
+            this.infoForm = []
+            this.curindex = 0;
+            this.curInfo = ''
+            this.terminal_id = ''
+            this.terminal_id_name = ''
         },
         //完成按钮点击事件
         async buttonSubmit() {
@@ -624,31 +704,7 @@ export default {
                 if (res.data.code === 1) {
                     this.dialogFormVisible = false
                     this.Refresh()
-                    this.add_newList = [];
-                    this.patientListName = '';
-                    this.terminal_nickname = '';
-                    this.music = '';
-                    this.limit_time_radio = '';
-                    this.needMusic = false;
-                    this.limit_time_input = '';
-                    this.limit_time_radio = 0
-                    this.periodTime = ''
-                    this.limit_Time =''
-                    this.patient_id = ''
-                    this.patient_id_name = ''
-                    this.patient_id_num = ''
-                    this.form.patient_ids = ''
-                    this.form.terminal_ids = ''
-                    this.form.test_paper_ids = ''
-                    this.form.music_id = ''
-                    this.form.music_time = ''
-                    this.form.policy_id = ''
-                    this.infoForm = []
-                    this.curindex = 0;
-                    this.curInfo = ''
-                    this.terminal_id = ''
-                    this.terminal_id_name = ''
-
+                    this.qingkong()
                 }
                 console.log(res.data.info)
             })

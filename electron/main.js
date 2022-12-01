@@ -27,16 +27,16 @@ app.on('ready', function () {
             autoHideMenuBar: true,
             nodeIntegration : true,
             contextIsolation:  false,
-            partition: String(+new Date()),
+            // partition: String(+new Date()),
             preload         : path.join(__dirname, 'preload.js'),
         }
     })
     Menu.setApplicationMenu(null)
 
     // 加载应用的 index
-    // mainWindow.loadURL("http://ycfqd.shoupinkangda.com/#/TerminalLogin")
-    // mainWindow.loadURL("http://etqd.shoupinkangda.com/#/TerminalLogin")
     // mainWindow.loadURL("http://ycfqd.shoupinkangda.com/#/Login")
+    // mainWindow.loadURL("http://etqd.shoupinkangda.com/#/TerminalLogin")
+    mainWindow.loadURL("http://localhost:8080/#/Login")
     // mainWindow.loadURL("http://192.168.2.198/h5/#/Login")
     // mainWindow.loadURL("http://192.168.8.189:82/#/Login")
     // mainWindow.loadURL("http://yunchanfu.shoupinkangda.com/h5/#/TerminalLogin")

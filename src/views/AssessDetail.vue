@@ -1332,7 +1332,9 @@ export default {
         this.isFinished = true;
         await this.getWard();
         this.$vLoading.hide();
-        this.setChart(this.infoData.title, this.infoData.result);
+        this.$nextTick(()=>{
+            this.setChart(this.infoData.title, this.infoData.result);
+        })
     },
 
     methods: {

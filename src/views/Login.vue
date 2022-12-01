@@ -51,6 +51,36 @@ export default {
             this.welcome = false
             this.denglu = true
         },
+        // 设置cookie
+        setCookie (c_name, c_pwd, c_state, exdays) {
+            const exdate = new Date()
+            exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays) // 保存的天数
+            window.document.cookie = 'username' + '=' + c_name + ';path=/;expires=' + exdate.toGMTString()
+            window.document.cookie = 'password' + '=' + c_pwd + ';path=/;expires=' + exdate.toGMTString()
+            window.document.cookie = 'state' + '=' + c_state + ';path=/;expires=' + exdate.toGMTString()
+        },
+        // 清除cookie
+        clearCookie: function () {
+            this.setCookie('', '', false, -1)
+        },
+        // 读取cookie
+        getCookie () {
+            if (document.cookie.length > 0) {
+                const arr = document.cookie.split('; ')
+                for (let i = 0; i < arr.length; i++) {
+                    const arr2 = arr[i].split('=')
+                    console.log(arr[2])
+                    if (arr2[0] === 'username') {
+                        this.username = arr2[1]
+                    } else if (arr2[0] === 'password') {
+                        this.password = arr2[1]
+                    } else if (arr2[0] === 'state') {
+                        this.remember = Boolean(arr2[1])
+                    }
+                }
+            }
+            console.log('this.username',this.username,'this.password',this.password,'this.remember',this.remember)
+        },
         async login() {
             // console.log('exec',window.window.getPwd())
             if (!this.username) {
@@ -70,7 +100,12 @@ export default {
                     this.$router.push('/');
                     sessionStorage.setItem('usertype','center')
 
-
+                    // 判断复选框是否被勾选 勾选则调用配置cookie方法
+                    // if (this.remember === true) {
+                    //     this.setCookie(this.username, this.password, true, 7)
+                    // } else {
+                    //     this.clearCookie()
+                    // }
                     if (this.remember) {
                         this.$store.commit('setAccount', {username: this.username, password: this.password});
                     } else {
@@ -93,13 +128,14 @@ export default {
 
     mounted() {
         this.$store.commit('setClient', false);
-
+        // this.getCookie()
         if (this.$store.state.user.account) {
             let data      = this.$store.state.user.account;
             this.password = data.password;
             this.username = data.username;
             this.remember = true;
         }
+        console.log('this.remember',this.remember)
     }
 }
 </script>
