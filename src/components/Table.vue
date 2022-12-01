@@ -900,7 +900,7 @@ export default {
         },
         // 返回上一页
         backPage() {
-            if(this.tableType == 1) {
+            if(this.tableType == 1 || this.tableType == 2 || this.tableType == 3) {
                 this.$router.replace({name: "ReportCenter"})
             }else {
                 this.$router.go(-1);

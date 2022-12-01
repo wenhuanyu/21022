@@ -109,26 +109,25 @@ export default {
 
                 // 解析数据
                 if (res.data) {
-                    console.log('解析数据data',res.data)
                     this.clear();
                     let data  = Buffer.from(res.data).toString('hex');
-                    console.log('解析数据data',data)
                     let match = data.match(/(aaaa2002.*?2323)/ig);
-                    // if (match && match.length > 0 && match[0].length === 100) {
-                    //     let bigData = match[0];
-                    //     if (this.hex2int(bigData.substring(8).substring(0, 2)) === 0) {
-                    //         let parseData = [];
-                    //         for (let i = 0; i < bigData.length; i += 2) {
-                    //             parseData.push(this.hex2int(bigData.substring(i, i + 2)));
-                    //         }
-                    //         this.$emit('onReceive', bigData, parseData);
-                    //         return;
-                    //     }
-                    //
-                    //     this.$emit('onInstability');
-                    // } else {
-                    //     this.$emit('onNoData');
-                    // }
+                    if (match && match.length > 0 && match[0].length === 100) {
+                        let bigData = match[0];
+                        if (this.hex2int(bigData.substring(8).substring(0, 2)) === 0) {
+                            let parseData = [];
+                            for (let i = 0; i < bigData.length; i += 2) {
+                                parseData.push(this.hex2int(bigData.substring(i, i + 2)));
+                            }
+
+                            this.$emit('onReceive', bigData, parseData);
+                            return;
+                        }
+
+                        this.$emit('onInstability');
+                    } else {
+                        this.$emit('onNoData');
+                    }
                 }
             });
 

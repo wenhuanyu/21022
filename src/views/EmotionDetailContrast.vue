@@ -45,12 +45,12 @@
                                 <p>{{form.patient_info.medical_num}}</p>
                             </div>
                             <div class="row">
-                                <span>入院时间</span>
-                                <p>{{form.patient_info.in_time}}</p>
-                            </div>
-                            <div class="row">
                                 <span>婚姻状态</span>
                                 <p>{{form.patient_info.marriage_id}}</p>
+                            </div>
+                            <div class="row">
+                                <span>首次训练</span>
+                                <p>{{form.patient_info.first}}</p>
                             </div>
                         </div>
                         <div class="first-group">
@@ -67,8 +67,8 @@
                                 <p>{{form.patient_info.education_id}}</p>
                             </div>
                             <div class="row">
-                                <span>训练时间</span>
-                                <p>{{form.patient_info.exam_time}}</p>
+                                <span>最后训练</span>
+                                <p>{{form.patient_info.last}}</p>
                             </div>
 
                         </div>
@@ -86,8 +86,8 @@
                                 <p>{{form.patient_info.occupation_id}}</p>
                             </div>
                             <div class="row">
-                                <span>完成时间</span>
-                                <p>{{form.patient_info.complete_time}}</p>
+                                <span>训练次数</span>
+                                <p>{{form.patient_info.frequency}}</p>
                             </div>
 
                         </div>
