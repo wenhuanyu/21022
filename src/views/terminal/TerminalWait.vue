@@ -73,6 +73,7 @@ export default {
             btnText: '',
             exam_id: '',
             patient_id:'',
+            sta:''
         };
     },
     computed: {},
@@ -96,7 +97,7 @@ export default {
                     this.started = false;
                     this.practiceType = res.data.data.practice_type;
                     this.$store.commit('setPracticeType',res.data.data.practice_type)
-
+                    this.sta = res.data.data.sta
                     let obj = {
                         limit_Time: res.data.data.exam.limit_time,
                         examInfo: this.examInfo,
@@ -198,14 +199,24 @@ export default {
                         exam_id: this.exam_id,
                         practice_type: this.practiceType
                     })).then(res => {
-                        console.log(res.data.info)
-                        this.$router.push({
-                            name: 'EmotionGame',
-                            query: {
-                                id: this.exam_id,
-                                practice_type: this.practiceType
-                            }
-                        })
+                        if(this.sta == 0) {
+                            this.$router.push({
+                                name: 'EmotionGame',
+                                query: {
+                                    id: this.exam_id,
+                                    practice_type: this.practiceType
+                                }
+                            })
+                        } else {
+                            this.$router.push({
+                                name: 'EmotionGameBrain',
+                                query: {
+                                    id: this.exam_id,
+                                    practice_type: this.practiceType
+                                }
+                            })
+                        }
+
                     });
 
 

@@ -37,9 +37,14 @@ export default new Vuex.Store({
         cmenu: '',
         mainMenus: [],
         xiaoxi:'',
+        ip: '',
     },
     mutations: {
-
+        webip(state, n) {
+            console.log('state',state)
+            console.log('n',n)
+            state.ip = n
+        },
         setExamObj(state, obj) {
             state.examObj = obj
         },

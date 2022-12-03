@@ -775,6 +775,15 @@ const routes = [
                     type : 'terminal'
                 }
             },
+            {
+                path     : '/EmotionGameBrain',
+                name     : 'EmotionGameBrain',
+                component: () => import('../views/emotion/EmotionGameBrain'),
+                meta     : {
+                    title: '情绪训练',
+                    type : 'terminal'
+                }
+            },
         ]
     },
 

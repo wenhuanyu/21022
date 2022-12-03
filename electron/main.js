@@ -27,7 +27,7 @@ app.on('ready', function () {
             autoHideMenuBar: true,
             nodeIntegration : true,
             contextIsolation:  false,
-            // partition: String(+new Date()),
+            partition: String(+new Date()),
             preload         : path.join(__dirname, 'preload.js'),
         }
     })
@@ -36,7 +36,7 @@ app.on('ready', function () {
     // 加载应用的 index
     // mainWindow.loadURL("http://ycfqd.shoupinkangda.com/#/Login")
     // mainWindow.loadURL("http://etqd.shoupinkangda.com/#/TerminalLogin")
-    mainWindow.loadURL("http://localhost:8080/#/Login")
+    mainWindow.loadURL("http://localhost:8080/#/TerminalLogin")
     // mainWindow.loadURL("http://192.168.2.198/h5/#/Login")
     // mainWindow.loadURL("http://192.168.8.189:82/#/Login")
     // mainWindow.loadURL("http://yunchanfu.shoupinkangda.com/h5/#/TerminalLogin")
@@ -134,14 +134,4 @@ ipcMain.on('connectCom', (event, options) => {
         }
     });
 });
-//
-// const spawn = require('child_process').spawn;
-// var childProcess = spawn('D:\\文环宇\\why\\WeChat Files\\wxid_7jng7z3hdecv21\\FileStorage\\File\\2022-11\\pc\\bin\\G2G_GS5001_serial_standard.exe', ['COM3',9600]); // 启动serialPortDemo.exe程序（C#开发），并传入两个参数：串口号与波特率；
-// childProcess.stdout.on('data', (data) => { console.log(""+data); }); // 监听serialPortDemo.exe的输出，并将输出打印出来
-
-// 让下方程序休眠一段时间后执行，可以看到C#的输出；
-// setTimeout(function(){
-//     childProcess.stdin.write('quit'); // 给C#程序输入'quit'命令
-//     childProcess.stdin.end(); // 完成输入后必须调用end方法，否则C#程序无法监听到用户输入
-// }, 30000)
 

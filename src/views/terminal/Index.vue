@@ -186,6 +186,7 @@ export default {
                     terminal_id: terminalId
                 })).then(res => {
                     this.ip = res.data.data.ip;
+                    this.$store.state.webip = res.data.data.ip
                 })
             }
         },
