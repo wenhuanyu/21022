@@ -7,6 +7,11 @@ module.exports = {
     //filenameHashing: false,
     assetsDir: 'assets',
     outputDir: './electron/dist/',
+    pluginOptions:{
+        electronBuilder:{
+            nodeIntegration: true
+        }
+    },
     /*图片去除hash*/
     chainWebpack: (config) => {
         config.module
@@ -25,4 +30,5 @@ module.exports = {
             chunkFilename: 'js/[name].' + Timestamp + '.js'
         }
     },
+
 }

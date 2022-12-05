@@ -983,20 +983,20 @@ export default {
     .game-player {
         position: absolute;
         left: 0;
-        top: 0;
+        top: 22%;
         bottom: 0;
         right: 0;
         width: 49%;
-        height: 100%;
+        height: 65%;
     }
     .game-player-brain {
         position: absolute;
         left: 52%;
-        top: 0;
+        top: 22%;
         bottom: 0;
         right: 0;
         width: 49%;
-        height: 100%;
+        height: 65%;
     }
 
     .toolbar {

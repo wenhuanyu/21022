@@ -30,37 +30,70 @@
                                     <p>患者：{{ item.patient_name }}</p>
                                     <p>耗时：{{ item.time }}</p>
 
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="(item.type == 3 || item.type == 2)&& item.rest.meditation !==0 ">
-                                        <p style="font-size: 12px;margin-bottom: 0">放松度：{{ item.rest.meditation }}</p>
-                                        <el-progress :percentage="item.rest.meditation" :show-text="false" style="width: 80px;"></el-progress>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="(item.type == 3 || item.type == 2)&& item.rest.heart_rate !==0 ">
-                                        <p  style="font-size: 12px;margin-bottom: 0">心率：{{ item.rest.heart_rate }}</p>
-                                        <el-progress :percentage="item.rest.heart_rate" :show-text="false"  style="width: 80px;"></el-progress>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="(item.type == 3 || item.type == 2)&& item.rest.attention !==0 ">
-                                        <p  style="font-size: 12px;margin-bottom: 0">注意力：{{ item.rest.attention }}</p>
-                                        <el-progress :percentage="item.rest.attention" :show-text="false"  style="width: 80px;"></el-progress>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-bottom: 5px;" v-if="(item.type == 3 || item.type == 2)&& item.rest.head_temp !==0">
+                                    <div v-if="!item.rest1">
+                                        <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.meditation !==0 ">
+                                            <p style="font-size: 12px;margin-bottom: 0">放松度：{{ item.rest.meditation }}</p>
+                                            <el-progress :percentage="item.rest.meditation" :show-text="false" style="width: 80px;"></el-progress>
+                                        </div>
+                                        <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.heart_rate !==0 ">
+                                            <p  style="font-size: 12px;margin-bottom: 0">心率：{{ item.rest.heart_rate }}</p>
+                                            <el-progress :percentage="item.rest.heart_rate" :show-text="false"  style="width: 80px;"></el-progress>
+                                        </div>
+                                        <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.attention !==0 ">
+                                            <p  style="font-size: 12px;margin-bottom: 0">注意力：{{ item.rest.attention }}</p>
+                                            <el-progress :percentage="item.rest.attention" :show-text="false"  style="width: 80px;"></el-progress>
+                                        </div>
+                                        <div style="display: flex;justify-content: space-between;width: 100%;margin-bottom: 5px;" v-if="item.type == 3&& item.rest.head_temp !==0">
 
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.meditation !==0 ">
-                                        <p style="font-size: 12px;margin-bottom: 0">放松度：{{ item.rest.meditation }}</p>
-                                        <el-progress :percentage="item.rest.meditation" :show-text="false" style="width: 80px;"></el-progress>
+                                            <p  style="font-size: 12px;margin-bottom: 0">皮温：{{ item.rest.head_temp }}</p>
+                                            <el-progress :percentage="item.rest.head_temp" :show-text="false"  style="width: 80px;"></el-progress>
+                                        </div>
                                     </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.heart_rate !==0 ">
-                                        <p  style="font-size: 12px;margin-bottom: 0">心率：{{ item.rest.heart_rate }}</p>
-                                        <el-progress :percentage="item.rest.heart_rate" :show-text="false"  style="width: 80px;"></el-progress>
+                                    <div v-else>
+                                        <div style="display: flex;align-items: flex-start;">
+                                            <div style="font-size: 12px;color: #ffb4b1;margin-right: 10px;">左</div>
+                                            <div>
+                                                <div style="display: flex;margin-right: 5px;">
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-right: 5px;" v-if="item.type == 3&& item.rest.meditation !==0 ">
+                                                        <p style="font-size: 12px;margin-bottom: 0">放松度：{{ item.rest.meditation }}</p>
+                                                    </div>
+                                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.heart_rate !==0 ">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">心率：{{ item.rest.heart_rate }}</p>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-right: 5px;" v-if="item.type == 3&& item.rest.attention !==0 ">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">注意力：{{ item.rest.attention }}</p>
+                                                    </div>
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-bottom: 5px;" v-if="item.type == 3&& item.rest.head_temp !==0">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">皮温：{{ item.rest.head_temp }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div  style="display: flex;align-items: flex-start;">
+                                            <div style="font-size: 12px;color: #ffb4b1;margin-right: 10px;">右</div>
+                                            <div>
+                                                <div style="display: flex;">
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-right: 5px;" v-if="item.type == 3&& item.rest1.meditation !==0 ">
+                                                        <p style="font-size: 12px;margin-bottom: 0">放松度：{{ item.rest1.meditation }}</p>
+                                                    </div>
+                                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest1.heart_rate !==0 ">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">心率：{{ item.rest1.heart_rate }}</p>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-right: 5px;" v-if="item.type == 3&& item.rest1.attention !==0 ">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">注意力：{{ item.rest1.attention }}</p>
+                                                    </div>
+                                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-bottom: 5px;" v-if="item.type == 3&& item.rest1.head_temp !==0">
+                                                        <p  style="font-size: 12px;margin-bottom: 0">皮温：{{ item.rest1.head_temp }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%" v-if="item.type == 3&& item.rest.attention !==0 ">
-                                        <p  style="font-size: 12px;margin-bottom: 0">注意力：{{ item.rest.attention }}</p>
-                                        <el-progress :percentage="item.rest.attention" :show-text="false"  style="width: 80px;"></el-progress>
-                                    </div>
-                                    <div style="display: flex;justify-content: space-between;width: 100%;margin-bottom: 5px;" v-if="item.type == 3&& item.rest.head_temp !==0">
 
-                                        <p  style="font-size: 12px;margin-bottom: 0">皮温：{{ item.rest.head_temp }}</p>
-                                        <el-progress :percentage="item.rest.head_temp" :show-text="false"  style="width: 80px;"></el-progress>
-                                    </div>
                                     <p v-if="item.type == 1">评估进度：{{ item.jindu }}道题</p>
 <!--                                    <p v-if="item.type == 2">训练进度：{{ item.jindutiao }}%</p>-->
                                     <p v-if="item.type == 3">训练进度：{{ item.jindutiao }}%</p>
@@ -95,19 +128,19 @@
                                         <router-link to="Assess">
                                             <el-button class="blue" round>新建测评任务</el-button>
                                         </router-link>
-                                        <div class="space-10"></div>
+                                        <div class="space-5"></div>
                                         <router-link to="Training">
                                             <el-button class="blue" round>新建呼吸训练</el-button>
                                         </router-link>
-                                        <div class="space-10"></div>
+                                        <div class="space-5"></div>
                                         <router-link to="Emotion">
                                             <el-button class="blue" round>新建情绪调节训练</el-button>
                                         </router-link>
-                                        <div class="space-10"></div>
+                                        <div class="space-5"></div>
                                         <router-link to="Nutrition">
                                             <el-button class="blue" round>新建营养指导</el-button>
                                         </router-link>
-                                        <div class="space-10"></div>
+                                        <div class="space-5"></div>
                                     </template>
                                 </div>
                             </div>
