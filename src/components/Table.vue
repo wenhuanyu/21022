@@ -567,7 +567,7 @@ export default {
         querySearch(queryString,cb){  // 文本的值、回调函数
             // 也可以在这里请求接口获取与文本值匹配相同的数据列表
             let dataList = this.scale_title_list // 检索相同数据的列表
-            console.log('dataList',dataList)
+            // console.log('dataList',dataList)
             let result = queryString?dataList.filter(this.createFilter(queryString)):dataList
             cb(result) // 会在文本框下面出现检索匹配相同的数据列表
         },
@@ -581,7 +581,7 @@ export default {
             };
         },
         handleSelect(item) {
-            console.log('item',item)
+            // console.log('item',item)
             this.form.test_paper_id = item.id
             this.lb = item.id
 
@@ -689,7 +689,7 @@ export default {
                     return;
                 }
                 if (this.multipleSelection.length == 2) {
-                    console.log('this.form.test_paper_id',this.form.test_paper_id)
+                    // console.log('this.form.test_paper_id',this.form.test_paper_id)
                     if (this.lb!=='') {
                         this.$router.replace({
                             name: "AssessDetailContrast",
@@ -772,7 +772,7 @@ export default {
                 let data = res.data.data;
                 this.searchData = data;
                 this.tableData = data.list;
-                console.log("~ this.tableData", this.tableData)
+                // console.log("~ this.tableData", this.tableData)
                 if (data.list == null) {
                     this.tableData = data;
                 }
@@ -851,7 +851,7 @@ export default {
         },
         // 报表图标点击
         handleClick(val) {
-            console.log('val',val)
+            // console.log('val',val)
             let query = {};
             for (const key in val) {
                 if (key.indexOf(this.info.jumpData) > -1) {

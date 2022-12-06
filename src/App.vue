@@ -9,11 +9,10 @@ export default {
         return {}
     },
     mounted() {
-        if(window.location.hash.match('AssessDetailReport')
+        if (window.location.hash.match('AssessDetailReport')
             || window.location.hash.match('EmotionDetailReport')
             || window.location.hash.match('BreathingDetailReport')
-            || window.location.hash.match('NutritionDetailReport'))
-        {
+            || window.location.hash.match('NutritionDetailReport')) {
         } else {
             this.$axios.post('/api/setting/auth').then(res => {
                 if (res.data && res.data.data.length) {

@@ -185,23 +185,23 @@ export default {
     },
     methods: {
         async getImg() {
-            await this.$axios.post('api/term/image').then(res => {
-                if (res.data.code === 1 && res.data.data.length > 0) {
-                    var newData = {};
-                    res.data.data.map(item => {
-                        newData[item.id] = item.image;
-                    });
-                    console.log(res.data.data);
-                    this.timeout = res.data.data.length == 0 ? 1000 : 5000;
-                    clearInterval(this.time)
-                    this.time = setInterval(this.getImg, this.timeout)
-                    this.list = this.list.map(item => {
-                        item.is_camera = newData[item.id] ? true : false;
-                        item.camera_img = newData[item.id]
-                        return item;
-                    })
-                }
-            });
+            // await this.$axios.post('api/term/image').then(res => {
+            //     if (res.data.code === 1 && res.data.data.length > 0) {
+            //         var newData = {};
+            //         res.data.data.map(item => {
+            //             newData[item.id] = item.image;
+            //         });
+            //         console.log(res.data.data);
+            //         this.timeout = res.data.data.length == 0 ? 1000 : 5000;
+            //         clearInterval(this.time)
+            //         this.time = setInterval(this.getImg, this.timeout)
+            //         this.list = this.list.map(item => {
+            //             item.is_camera = newData[item.id] ? true : false;
+            //             item.camera_img = newData[item.id]
+            //             return item;
+            //         })
+            //     }
+            // });
         },
         async getList() {
             await this.$axios.post('api/term/lst').then(res => {

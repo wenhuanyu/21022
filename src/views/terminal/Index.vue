@@ -3,7 +3,7 @@
         <terminal-wait v-if="$route.name==='TerminalWait'" ref="termWait"></terminal-wait>
         <terminal-answer v-else-if="$route.name==='TerminalAnswer'" ref="termAnswer"></terminal-answer>
         <router-view v-else></router-view>
-        <screenshot v-show="false" ref="screenshot" v-if="photoShow"></screenshot>
+<!--        <screenshot v-show="false" ref="screenshot" v-if="photoShow"></screenshot>-->
         <el-dialog title="信息" :visible.sync="suspend" :show-close="false" :close-on-click-modal="false" width="30%">
             <span>测评已暂停，请在主控端继续开启</span>
         </el-dialog>
