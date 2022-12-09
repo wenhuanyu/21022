@@ -635,7 +635,6 @@ export default {
             this.patientListName = '';
             this.terminal_nickname = '';
             this.music = '';
-            this.limit_time_radio = '';
             this.needMusic = false;
             this.limit_time_input = '';
             this.limit_time_radio = 0
@@ -644,12 +643,13 @@ export default {
             this.patient_id = ''
             this.patient_id_name = ''
             this.patient_id_num = ''
-            this.form.patient_ids = ''
-            this.form.terminal_ids = ''
-            this.form.test_paper_ids = ''
+            this.form.patient_ids = []
+            this.form.terminal_ids = []
+            this.form.test_paper_ids = []
             this.form.music_id = ''
             this.form.music_time = ''
-            this.form.policy_id = ''
+            this.form.policy_id = []
+            this.form.limit_time = 0
             this.infoForm = []
             this.curindex = 0;
             this.curInfo = ''
